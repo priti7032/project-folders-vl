@@ -1,0 +1,145 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    width: 350px;
+    padding: 20px;
+    text-align: center;
+    animation: fadeIn 1s ease forwards;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-shadow: 1px 1px 2px #bdc3c7;
+}
+
+.player {
+    margin-bottom: 20px;
+}
+
+audio {
+    width: 100%;
+    outline: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(44, 62, 80, 0.2);
+}
+
+.song-info {
+    margin: 15px 0;
+    animation: slideIn 0.8s ease forwards;
+}
+
+.song-info h2 {
+    font-size: 1.2rem;
+    color: #2980b9;
+}
+
+.song-info p {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.controls button {
+    background: #2980b9;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(41, 128, 185, 0.4);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.controls button:hover {
+    background: #3498db;
+    transform: scale(1.1);
+}
+
+.controls button:active {
+    transform: scale(0.95);
+}
+
+.playlist {
+    list-style: none;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 10px;
+    border-top: 1px solid #ecf0f1;
+}
+
+.playlist li {
+    padding: 10px;
+    border-bottom: 1px solid #ecf0f1;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.playlist li:hover {
+    background: #ecf0f1;
+}
+
+.playlist li.active {
+    background: #2980b9;
+    color: white;
+    font-weight: bold;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrollbar styling */
+.playlist::-webkit-scrollbar {
+    width: 6px;
+}
+
+.playlist::-webkit-scrollbar-thumb {
+    background-color: #2980b9;
+    border-radius: 3px;
+}
+
+.playlist::-webkit-scrollbar-track {
+    background: #ecf0f1;
+}

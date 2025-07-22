@@ -1,0 +1,276 @@
+<!-- ===========================================
+     Simple Music Website
+     Files: index.html | styles.css | script.js
+     Author: ChatGPT (July 15, 2025)
+     =========================================== -->
+
+<!-- ================== index.html ================== -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Music Hub</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="dark">
+    <header class="site-header">
+        <h1>🎵 My Music Hub</h1>
+        <button id="themeToggle" aria-label="Toggle dark mode">🌗</button>
+    </header>
+
+    <main class="grid">
+        <!-- ======= Player Section ======= -->
+        <section id="player" class="card">
+            <img id="cover" src="https://placehold.co/400x400" alt="Album cover" />
+            <h2 id="trackTitle">Title</h2>
+            <p id="trackArtist">Artist</p>
+
+            <audio id="audio" preload="metadata"></audio>
+
+            <div class="controls">
+                <button id="prev" aria-label="Previous">⏮️</button>
+                <button id="playPause" aria-label="Play/Pause">▶️</button>
+                <button id="next" aria-label="Next">⏭️</button>
+            </div>
+            <input type="range" id="seek" value="0" min="0" max="100" />
+        </section>
+
+        <!-- ======= Playlist Section ======= -->
+        <section id="playlist" class="card">
+            <h3>Playlist</h3>
+            <ul id="trackList"></ul>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2025 My Music Hub • Built with HTML5, CSS3 & JavaScript</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+/* ================== styles.css ================== */
+/* Core resets */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s ease, color 0.3s ease;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+:root {
+    --accent: #4f46e5;
+    --radius: 1rem;
+    --shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+body.light {
+    --bg: #f5f7fb;
+    --card-bg: #ffffff;
+    --text: #1e293b;
+}
+body.dark {
+    --bg: #0f172a;
+    --card-bg: #1e293b;
+    --text: #f1f5f9;
+}
+.site-header, .site-footer {
+    padding: 1rem 2rem;
+    text-align: center;
+    background: var(--card-bg);
+    box-shadow: var(--shadow);
+}
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#themeToggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text);
+}
+.grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+#cover {
+    width: 100%;
+    max-width: 300px;
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+}
+.controls button {
+    background: var(--accent);
+    border: none;
+    color: #fff;
+    font-size: 1.25rem;
+    padding: 0.5rem 1rem;
+    margin: 0 0.25rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+.controls button:active { transform: scale(0.95); }
+#seek {
+    width: 100%;
+    margin-top: 1rem;
+}
+#trackList {
+    list-style: none;
+    width: 100%;
+    margin-top: 1rem;
+}
+#trackList li {
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    border-radius: var(--radius);
+    transition: background 0.2s ease;
+}
+#trackList li:hover { background: rgba(0,0,0,0.05); }
+#trackList li.active { background: var(--accent); color: #fff; }
+
+
+/* ================== script.js ================== */
+const tracks = [
+    {
+        title: "Acoustic Breeze",
+        artist: "Benjamin Tissot",
+        src: "https://www.bensound.com/bensound-music/bensound-acousticbreeze.mp3",
+        cover: "https://placehold.co/400x400?text=Acoustic+Breeze"
+    },
+    {
+        title: "Creative Minds",
+        artist: "Benjamin Tissot",
+        src: "https://www.bensound.com/bensound-music/bensound-creativeminds.mp3",
+        cover: "https://placehold.co/400x400?text=Creative+Minds"
+    },
+    {
+        title: "Jazz Comedy",
+        artist: "Benjamin Tissot",
+        src: "https://www.bensound.com/bensound-music/bensound-jazzcomedy.mp3",
+        cover: "https://placehold.co/400x400?text=Jazz+Comedy"
+    }
+];
+
+const audio = document.getElementById("audio");
+const cover = document.getElementById("cover");
+const trackTitle = document.getElementById("trackTitle");
+const trackArtist = document.getElementById("trackArtist");
+const playPauseBtn = document.getElementById("playPause");
+const prevBtn = document.getElementById("prev");
+const nextBtn = document.getElementById("next");
+const seekBar = document.getElementById("seek");
+const trackListEl = document.getElementById("trackList");
+const themeToggle = document.getElementById("themeToggle");
+let currentTrack = 0;
+
+function loadTrack(index) {
+    const track = tracks[index];
+    audio.src = track.src;
+    cover.src = track.cover;
+    trackTitle.textContent = track.title;
+    trackArtist.textContent = track.artist;
+    highlightActive();
+}
+
+function playTrack() {
+    audio.play();
+    playPauseBtn.textContent = "⏸️";
+}
+
+function pauseTrack() {
+    audio.pause();
+    playPauseBtn.textContent = "▶️";
+}
+
+function togglePlayPause() {
+    if (audio.paused) {
+        playTrack();
+    } else {
+        pauseTrack();
+    }
+}
+
+function nextTrack() {
+    currentTrack = (currentTrack + 1) % tracks.length;
+    loadTrack(currentTrack);
+    playTrack();
+}
+
+function prevTrack() {
+    currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+    loadTrack(currentTrack);
+    playTrack();
+}
+
+function updateSeek() {
+    const progress = (audio.currentTime / audio.duration) * 100;
+    seekBar.value = progress;
+}
+
+function seekAudio() {
+    const seekTo = (seekBar.value / 100) * audio.duration;
+    audio.currentTime = seekTo;
+}
+
+function buildPlaylist() {
+    tracks.forEach((track, index) => {
+        const li = document.createElement("li");
+        li.textContent = `${track.title} — ${track.artist}`;
+        li.addEventListener("click", () => {
+            currentTrack = index;
+            loadTrack(index);
+            playTrack();
+        });
+        trackListEl.appendChild(li);
+    });
+}
+
+function highlightActive() {
+    [...trackListEl.children].forEach((li, idx) => {
+        li.classList.toggle("active", idx === currentTrack);
+    });
+}
+
+// Theme toggle
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+}
+
+// Event listeners
+playPauseBtn.addEventListener("click", togglePlayPause);
+nextBtn.addEventListener("click", nextTrack);
+prevBtn.addEventListener("click", prevTrack);
+audio.addEventListener("timeupdate", updateSeek);
+seekBar.addEventListener("input", seekAudio);
+audio.addEventListener("ended", nextTrack);
+themeToggle.addEventListener("click", toggleTheme);
+
+// Init
+buildPlaylist();
+loadTrack(currentTrack);

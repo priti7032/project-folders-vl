@@ -7,139 +7,98 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-    color: #333;
+    background: linear-gradient(to right, #a8edea, #fed6e3);
+    color: #0e0303;
     min-height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+    flex-direction: column;
 }
 
-.container {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    width: 350px;
-    padding: 20px;
+header {
+    background-color: #0077b6;
+    color: white;
+    padding: 1.5rem;
     text-align: center;
-    animation: fadeIn 1s ease forwards;
+    box-shadow: 0 4px 6px rgba(231, 207, 207, 0.1);
 }
 
-h1 {
-    margin-bottom: 20px;
-    color: #2c3e50;
-    text-shadow: 1px 1px 2px #bdc3c7;
-}
-
-.player {
-    margin-bottom: 20px;
-}
-
-audio {
-    width: 100%;
-    outline: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(44, 62, 80, 0.2);
-}
-
-.song-info {
-    margin: 15px 0;
-    animation: slideIn 0.8s ease forwards;
-}
-
-.song-info h2 {
-    font-size: 1.2rem;
-    color: #2980b9;
-}
-
-.song-info p {
-    font-size: 0.9rem;
-    color: #7f8c8d;
-}
-
-.controls {
+nav {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    margin-bottom: 20px;
+    background-color: #023e8a;
+    padding: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.controls button {
-    background: #2980b9;
+/* Added to make nav links white */
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0 0.3rem;
+}
+
+nav a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+nav .tab-button {
+    background: none;
     border: none;
     color: white;
-    font-size: 1.5rem;
-    padding: 10px 15px;
-    border-radius: 50%;
+    padding: 0.75rem 1.5rem;
+    margin: 0 0.5rem;
+    font-size: 1rem;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(41, 128, 185, 0.4);
-    transition: background 0.3s ease, transform 0.2s ease;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
-.controls button:hover {
-    background: #3498db;
-    transform: scale(1.1);
+nav .tab-button:hover,
+nav .tab-button.active {
+    background-color: #90e0ef;
+    color: #023e8a;
 }
 
-.controls button:active {
-    transform: scale(0.95);
+main {
+    flex-grow: 1;
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
 }
 
-.playlist {
-    list-style: none;
-    max-height: 200px;
-    overflow-y: auto;
-    padding-right: 10px;
-    border-top: 1px solid #ecf0f1;
+.tab-content {
+    display: none;
 }
 
-.playlist li {
-    padding: 10px;
-    border-bottom: 1px solid #ecf0f1;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.tab-content.active {
+    display: block;
 }
 
-.playlist li:hover {
-    background: #ecf0f1;
+h1, h2 {
+    font-weight: 700;
 }
 
-.playlist li.active {
-    background: #2980b9;
+ul, ol {
+    margin: 1rem 0 1rem 1.5rem;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #0077b6;
     color: white;
-    font-weight: bold;
-}
-
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Scrollbar styling */
-.playlist::-webkit-scrollbar {
-    width: 6px;
-}
-
-.playlist::-webkit-scrollbar-thumb {
-    background-color: #2980b9;
-    border-radius: 3px;
-}
-
-.playlist::-webkit-scrollbar-track {
-    background: #ecf0f1;
+    box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
+    margin-top: 2rem;
 }

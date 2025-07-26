@@ -1,513 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gomantak.com</title>
-  <style>
-    /* Reset and base styles */
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: background-color 0.3s, color 0.3s;
-    }
-    :root {
-      --bg-color: #ffffff;
-      --text-color: #222222;
-      --primary-color: #0077cc;
-      --secondary-color: #005fa3;
-      --accent-color: #ff6f61;
-      --card-bg: #f9f9f9;
-      --card-shadow: rgba(0,0,0,0.1);
-    }
-    [data-theme="dark"] {
-      --bg-color: #121212;
-      --text-color: #e0e0e0;
-      --primary-color: #3399ff;
-      --secondary-color: #2673cc;
-      --accent-color: #ff8a80;
-      --card-bg: #1e1e1e;
-      --card-shadow: rgba(0,0,0,0.7);
-    }
-    header {
-      background-color: var(--primary-color);
-      color: rgb(0, 0, 0);
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      position: relative;
-    }
-    header h1 {
-      margin: 0 auto;
-      font-size: 1.8rem;
-      font-weight: 700;
-      text-align: center;
-    }
-    nav {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      transition: background-color 0.3s;
-    }
-    nav a:hover,
-    nav a:focus {
-      background-color: var(--secondary-color);
-      outline: none;
-    }
-    main {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-    section {
-      margin-bottom: 3rem;
-    }
-      h2 {
-        border-bottom: 3px solid var(--accent-color);
-        padding-bottom: 0.3rem;
-        margin-bottom: 1rem;
-        font-weight: 700;
-        font-size: 1.6rem;
-      }
-      #statistics h2 {
-        text-align: center;
-      }
-    /* Cards */
-    .card {
-      background-color: var(--card-bg);
-      box-shadow: 0 2px 6px var(--card-shadow);
-      border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      transition: transform 0.2s;
-    }
-    .card img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 6px;
-      margin-bottom: 0.75rem;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-    }
-    /* Grid layouts */
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-    }
-    /* Photo gallery */
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 0.5rem;
-    }
-    .gallery img {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-    .gallery img:hover {
-      transform: scale(1.05);
-    }
-    /* Itinerary planner form */
-    form {
-      background-color: var(--card-bg);
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px var(--card-shadow);
-      max-width: 600px;
-    }
-    form label {
-      display: block;
-      margin-bottom: 0.3rem;
-      font-weight: 600;
-    }
-    form input[type="text"],
-    form select {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1rem;
-    }
-    form button {
-      background-color: var(--primary-color);
-      color: white;
-      border: none;
-      padding: 0.7rem 1.2rem;
-      font-size: 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    form button:hover,
-    form button:focus {
-      background-color: var(--secondary-color);
-      outline: none;
-    }
-    /* Reviews/testimonials */
-    .testimonial {
-      background-color: var(--card-bg);
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px var(--card-shadow);
-      margin-bottom: 1rem;
-    }
-    .testimonial p {
-      font-style: italic;
-      margin-bottom: 0.5rem;
-    }
-    .testimonial .author {
-      font-weight: 700;
-      text-align: right;
-      color: var(--primary-color);
-    }
-    /* Dark/light toggle button */
-    .theme-toggle {
-      background: none;
-      border: 2px solid white;
-      color: white;
-      padding: 0.3rem 0.7rem;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    .theme-toggle:hover,
-    .theme-toggle:focus {
-      background-color: white;
-      color: var(--primary-color);
-      outline: none;
-    }
-    /* Responsive adjustments */
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      nav {
-        width: 100%;
-        justify-content: space-around;
-        margin-top: 0.5rem;
-      }
-      .header-logo-title {
-        position: static;
-        transform: none;
-        justify-content: flex-start;
-        margin-bottom: 0.5rem;
-        width: 100%;
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Goa Climate</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <h1>Gomantak.com</h1>
-    <nav>
-      <a href="#attractions">Top Attractions</a>
-      <a href="#guides">Travel Guides</a>
-      <a href="#statistics">Statistics</a>
-      <a href="#stay">Stay & Transport</a>
-      <a href="#sustainability">Sustainability</a>
-      <a href="#itinerary">Itinerary Planner</a>
-      <a href="#gallery">Photo Gallery</a>
-      <a href="#reviews">Reviews</a>
-    </nav>
-    <button class="theme-toggle" aria-label="Toggle dark/light theme">Dark Mode</button>
-  </header>
-  <main>
-    <section id="attractions">
-      <h2>Top Attractions</h2>
-      <div class="grid-3">
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Baga Beach" />
-          <h3>Baga Beach</h3>
-          <p>Famous for its vibrant nightlife and water sports.</p>
-        </div>
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=400&q=80" alt="Fort Aguada" />
-          <h3>Fort Aguada</h3>
-          <p>A 17th-century Portuguese fort with panoramic views of the Arabian Sea.</p>
-        </div>
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=400&q=80" alt="Basilica of Bom Jesus" />
-          <h3>Basilica of Bom Jesus</h3>
-          <p>A UNESCO World Heritage Site known for its baroque architecture.</p>
-        </div>
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=400&q=80" alt="Dudhsagar Falls" />
-          <h3>Dudhsagar Falls</h3>
-          <p>One of the tallest waterfalls in India, surrounded by lush greenery.</p>
-        </div>
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" alt="Palolem Beach" />
-          <h3>Palolem Beach</h3>
-          <p>A serene beach known for its crescent shape and calm waters.</p>
-        </div>
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Chapora Fort" />
-          <h3>Chapora Fort</h3>
-          <p>Popular fort offering stunning sunset views.</p>
-        </div>
-      </div>
-    </section>
-    <section id="guides">
-      <h2>Travel Guides</h2>
-      <div class="grid-3">
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80" alt="Local Food" />
-          <h3>Local Food</h3>
-          <p>Explore Goan cuisine including seafood, vindaloo, and bebinca desserts.</p>
-        </div>
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80" alt="Festivals" />
-          <h3>Festivals</h3>
-          <p>Experience vibrant festivals like Carnival, Shigmo, and Christmas celebrations.</p>
-        </div>
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80" alt="Shopping" />
-          <h3>Shopping</h3>
-          <p>Discover local markets for spices, handicrafts, and souvenirs.</p>
-        </div>
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80" alt="Cultural Experiences" />
-          <h3>Cultural Experiences</h3>
-          <p>Attend traditional music, dance, and art events across Goa.</p>
-        </div>
-      </div>
-    </section>
-    <section id="statistics">
-      <h2>Tourist Footfall and Statistics</h2>
-      <canvas id="visitorChart" width="400" height="200" aria-label="Tourist visitor statistics chart" role="img"></canvas>
-    </section>
-    <section id="stay">
-      <h2>Stay and Transport Information</h2>
-      <div class="grid-3">
-        <div class="card">
-          <h3>Hotels</h3>
-          <p>Wide range of hotels from budget to luxury stays.</p>
-        </div>
-        <div class="card">
-          <h3>Airbnb</h3>
-          <p>Cozy and affordable Airbnb options across Goa.</p>
-        </div>
-        <div class="card">
-          <h3>Local Transport</h3>
-          <p>Information on buses, taxis, and rental scooters for easy travel.</p>
-        </div>
-      </div>
-    </section>
-    <section id="sustainability">
-      <h2>Sustainability & Eco-Tourism</h2>
-      <p>Promoting green travel initiatives in Goa including beach cleanups, eco-resorts, and responsible tourism practices.</p>
-    </section>
-    <section id="itinerary">
-      <h2>Itinerary Planner</h2>
-      <form id="itineraryForm" aria-label="Itinerary planner form">
-        <label for="days">Select number of days:</label>
-        <select id="days" name="days" required>
-          <option value="" disabled selected>Select days</option>
-          <option value="3">3 Days</option>
-          <option value="5">5 Days</option>
-        </select>
-        <label for="interest">Select your interest:</label>
-        <select id="interest" name="interest" required>
-          <option value="" disabled selected>Select interest</option>
-          <option value="beaches">Beaches</option>
-          <option value="culture">Culture</option>
-          <option value="nature">Nature</option>
-          <option value="food">Food</option>
-        </select>
-        <button type="submit">Generate Itinerary</button>
-      </form>
-      <div id="itineraryResult" aria-live="polite" style="margin-top:1rem;"></div>
-    </section>
-    <section id="gallery">
-      <h2>Photo Gallery</h2>
-      <div class="gallery" aria-label="Photo gallery of Goa">
-        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Baga Beach" />
-        <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=400&q=80" alt="Fort Aguada" />
-        <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=400&q=80" alt="Basilica of Bom Jesus" />
-        <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=400&q=80" alt="Dudhsagar Falls" />
-        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" alt="Palolem Beach" />
-        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Chapora Fort" />
-      </div>
-    </section>
-    <section id="reviews">
-      <h2>Reviews / Testimonials</h2>
-      <div class="testimonial">
-        <p>"Goa is a paradise! The beaches and culture are amazing."</p>
-        <div class="author">- Kirti pujari</div>
-      </div>
-      <div class="testimonial">
-        <p>"Loved the food and the friendly locals. Highly recommend visiting during the festival season."</p>
-        <div class="author">- Suman.G</div>
-      </div>
-      <div class="testimonial">
-        <p>"The itinerary planner helped me make the most of my trip. Very useful and easy to use."</p>
-        <div class="author">- Gurpreet.S</div>
-      </div>
-      <div class="testimonial">
-        <p>"Beautiful beaches and vibrant nightlife. A must-visit destination!"</p>
-        <div class="author">-  willita.A</div>
-      </div>
-      <div class="testimonial">
-        <p>"The local food is delicious and the people are very welcoming."</p>
-        <div class="author">- Pooja .R</div>
-      </div>
-      <div class="testimonial">
-        <p>"Great place for family vacations with plenty of activities for all ages."</p>
-        <div class="author">- Manju Naveena</div>
-      </div>
-    </section>
-  </main>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    // Dark/light theme toggle
-    const themeToggleBtn = document.querySelector('.theme-toggle');
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    themeToggleBtn.textContent = currentTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+    <header>
+        <h1>GO Climate</h1>
+        <nav>
+            <a href="index.html" class="active">Home</a> |
+            <a href="about.html">About</a> |
+            <a href="data.html">Climate Data</a> |
+            <a href="tourism.html">Tourism</a> |
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Welcome to GOa Climate</h2>
+        <p>Explore the climate of Goa - temperature, rainfall, and seasons.</p>
+        <section>
+            <h3>Temperature in Goa</h3>
+            <p>Goa experiences a tropical climate with warm temperatures throughout the year.</p>
+            <ul>
+                <li>Summer (March to May): 25°C to 35°C</li>
+                <li>Monsoon (June to September): 23°C to 30°C</li>
+                <li>Winter (October to February): 20°C to 30°C</li>
+            </ul>
+            <img src="Goa_Climate_Temperature.jpg" alt="Goa Temperature" />
+        </section>
+     
+        <section>
+            <h3>Seasons in Goa</h3>
+            <p>Goa has three main seasons:</p>
+            <ol>
+                <li>Summer</li>
+                <li>Monsoon</li>
+                <li>Winter</li>
+                   <section>
+            <h3>Rainfall in Goa</h3>
+            <p>Goa receives heavy rainfall during the monsoon season.</p>
+            <ul>
+                <li>Average annual rainfall: 3000 mm</li>
+                <li>Monsoon months: June to September</li>
+                <li>Peak rainfall in July and August</li>
+            </ul>
+   
+        </section>
+            </ol>
+            <p>Each season has its own unique climate characteristics and activities.</p>
 
-    themeToggleBtn.addEventListener('click', () => {
-      const theme = document.documentElement.getAttribute('data-theme');
-      if (theme === 'light') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        themeToggleBtn.textContent = 'Light Mode';
-        localStorage.setItem('theme', 'dark');
-      } else {
-        document.documentElement.setAttribute('data-theme', 'light');
-        themeToggleBtn.textContent = 'Dark Mode';
-        localStorage.setItem('theme', 'light');
-      }
-    });
-
-    // Chart.js visitor statistics
-    const ctx = document.getElementById('visitorChart').getContext('2d');
-      const visitorChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['2018', '2019', '2020', '2021', '2022'],
-          datasets: [{
-            label: 'Visitors (in millions)',
-            data: [7.5, 8.2, 3.1, 5.0, 9.0],
-            backgroundColor: [
-              '#0077cc',
-              '#005fa3',
-              '#ff6f61',
-              '#3399ff',
-              '#2673cc'
-            ]
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-
-    // Itinerary planner logic
-    const itineraryForm = document.getElementById('itineraryForm');
-    const itineraryResult = document.getElementById('itineraryResult');
-
-    const itineraries = {
-      beaches: {
-        3: [
-          'Day 1: Visit Baga Beach and enjoy water sports.',
-          'Day 2: Explore Palolem Beach and relax.',
-          'Day 3: Sunset at Chapora Fort.'
-        ],
-        5: [
-          'Day 1: Baga Beach and Fort Aguada.',
-          'Day 2: Palolem Beach and Dudhsagar Falls.',
-          'Day 3: Basilica of Bom Jesus and local markets.',
-          'Day 4: Chapora Fort and local food tasting.',
-          'Day 5: Relax at beaches and nightlife.'
-        ]
-      },
-      culture: {
-        3: [
-          'Day 1: Visit Basilica of Bom Jesus and Se Cathedral.',
-          'Day 2: Attend local festivals and cultural shows.',
-          'Day 3: Explore markets and try Goan cuisine.'
-        ],
-        5: [
-          'Day 1: Churches and forts tour.',
-          'Day 2: Festivals and traditional music events.',
-          'Day 3: Museums and art galleries.',
-          'Day 4: Local cooking classes and markets.',
-          'Day 5: Cultural performances and nightlife.'
-        ]
-      },
-      nature: {
-        3: [
-          'Day 1: Dudhsagar Falls and spice plantations.',
-          'Day 2: Wildlife sanctuaries and nature trails.',
-          'Day 3: Beach relaxation and sunset views.'
-        ],
-        5: [
-          'Day 1: Dudhsagar Falls and wildlife sanctuary.',
-          'Day 2: Nature trails and bird watching.',
-          'Day 3: Spice plantations and waterfalls.',
-          'Day 4: Beach day and eco-tourism activities.',
-          'Day 5: Relax and local nature experiences.'
-        ]
-      },
-      food: {
-        3: [
-          'Day 1: Try Goan seafood and local dishes.',
-          'Day 2: Visit local markets and food festivals.',
-          'Day 3: Cooking class and beachside dining.'
-        ],
-        5: [
-          'Day 1: Seafood tasting and street food tour.',
-          'Day 2: Food markets and traditional sweets.',
-          'Day 3: Cooking classes and local restaurants.',
-          'Day 4: Festival food and beach dining.',
-          'Day 5: Relax and enjoy local cuisine.'
-        ]
-      }
-    };
-
-    itineraryForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const days = itineraryForm.days.value;
-      const interest = itineraryForm.interest.value;
-      if (!days || !interest) {
-        itineraryResult.textContent = 'Please select both days and interest.';
-        return;
-      }
-      const plan = itineraries[interest][days];
-      if (!plan) {
-        itineraryResult.textContent = 'No itinerary available for the selected options.';
-        return;
-      }
-      itineraryResult.innerHTML = '<h3>Your Itinerary:</h3><ul>' + plan.map(day => `<li>${day}</li>`).join('') + '</ul>';
-    });
-  </script>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 Goa Climate Info</p>
+    </footer>
 </body>
 </html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact - Goa Climate</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header>
+        <h1>Go Climate</h1>
+        <nav>
+            <a href="index.html">Home</a> |
+            <a href="about.html">About</a> |
+            <a href="data.html">Climate Data</a> |
+            <a href="tourism.html">Tourism</a> |
+            <a href="contact.html" class="active">Contact</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Contact Us</h2>
+        <form id="contactForm">
+            <label for="name">Name:</label><br />
+            <input type="text" id="name" name="name" required /><br /><br />
+            <label for="email">Email:</label><br />
+            <input type="email" id="email" name="email" required /><br /><br />
+            <label for="message">Message:</label><br />
+            <textarea id="message" name="message" rows="5" required></textarea><br /><br />
+            <button type="submit">Send</button>
+        </form>
+        <p id="formMessage" style="color: green; display: none;">Thank you for your message!</p>
+    </main>
+    <footer>
+        <p>© 2025 Goa Climate Info</p>
+    </footer>
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Simple form submission simulation
+            document.getElementById('formMessage').style.display = 'block';
+            this.reset();
+        });
+    </script>
+</body>
+</html>
